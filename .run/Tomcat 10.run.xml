@@ -3,9 +3,9 @@
     <option name="BROWSER_ID" value="37cae5b9-e8b2-4949-9172-aafa37fbc09c" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="spring-web-app:war">
+      <artifact name="spring-web-app:war exploded">
         <settings>
-          <option name="CONTEXT_PATH" value="/spring_web_app_war" />
+          <option name="CONTEXT_PATH" value="/spring_web_demo" />
         </settings>
       </artifact>
     </deployment>
@@ -83,7 +83,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="spring-web-app:war" />
+        <artifact name="spring-web-app:war exploded" />
       </option>
     </method>
   </configuration>
