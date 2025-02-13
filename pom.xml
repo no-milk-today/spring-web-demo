@@ -16,6 +16,23 @@
     <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
+  <dependencies>
+    <!-- Spring Web MVC -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>6.2.1</version>
+    </dependency>
+
+    <!-- Servlet API -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>4.0.2</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>spring-web-app</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
