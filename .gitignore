@@ -1,6 +1,10 @@
 *.iml
 /.idea
 /target
+
+.gradle
+/build
+
 log
 .mvn
 
