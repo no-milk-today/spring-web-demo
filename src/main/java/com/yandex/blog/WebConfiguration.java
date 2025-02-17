@@ -6,5 +6,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.yandex.blog.controller")
+@ComponentScan(basePackages = "com.yandex.blog")
 public class WebConfiguration {}
