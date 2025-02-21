@@ -1,6 +1,7 @@
 package com.yandex.blog.repository;
 
 import com.yandex.blog.model.Post;
+import com.yandex.blog.repository.mapper.PostRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;

@@ -48,13 +48,13 @@ class JdbcPostRepositoryTest {
     }
 
     @Test
-    void save_shouldAddPostToDatabase() {
+    void save() {
         var now = LocalDateTime.now();
-        Post post = new Post(4L, "Новый обзор Audi Q7", "https://example.com/audi_q7.jpg", "Детальный обзор Audi Q7 2025 года.", "Кроссоверы", 120L, now, now);
+        var post = new Post(4L, "Новый обзор Audi Q7", "https://example.com/audi_q7.jpg", "Детальный обзор Audi Q7 2025 года.", "Кроссоверы", 120L, now, now);
 
         postRepository.save(post);
 
-        Post savedPost = postRepository.findAll().stream()
+        var savedPost = postRepository.findAll().stream()
                 .filter(p -> p.getId().equals(4L))
                 .findFirst()
                 .orElse(null);
@@ -65,26 +65,73 @@ class JdbcPostRepositoryTest {
     }
 
     @Test
-    void findAll_shouldReturnAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    void update() {
+        var postToUpdate = postRepository.findById(1L);
+        assertNotNull(postToUpdate);
+
+        // Обновляем поля
+        var updatedTitle = "Обновлённый обзор Tesla Model S Plaid";
+        var updatedContent = "Новый расширенный обзор с тестами производительности";
+        var updatedPost = new Post(
+                postToUpdate.getId(),
+                updatedTitle,
+                postToUpdate.getImageUrl(),
+                updatedContent,
+                "Электрокары",
+                postToUpdate.getLikeCount(),
+                postToUpdate.getCreated(),
+                LocalDateTime.now() // обновляем время апдейта
+        );
+
+        // Выполняем обновление
+        postRepository.update(updatedPost);
+
+        // Проверяем обновлённые данные
+        var resultPost = postRepository.findById(1L);
+        assertNotNull(resultPost);
+        assertEquals(updatedTitle, resultPost.getTitle());
+        assertEquals(updatedContent, resultPost.getContent());
+        assertEquals("Электрокары", resultPost.getTag());
+
+        // Проверяем, что другие посты не изменились
+        var otherPost = postRepository.findById(2L);
+        assertEquals("Обзор BMW M3 2025", otherPost.getTitle());
+    }
+
+    @Test
+    void findById() {
+        var existingPost = postRepository.findById(1L);
+
+        assertNotNull(existingPost);
+        assertEquals("Новая Tesla Model S", existingPost.getTitle());
+        assertEquals("Электромобили", existingPost.getTag());
+
+        // Поиск несуществующего поста
+        var nonExistingPost = postRepository.findById(999L);
+        assertNull(nonExistingPost);
+    }
+
+    @Test
+    void findAll() {
+        var posts = postRepository.findAll();
 
         assertNotNull(posts);
         assertEquals(3, posts.size());
 
-        Post post = posts.get(0);
+        var post = posts.getFirst();
         assertEquals(1L, post.getId());
         assertEquals("Новая Tesla Model S", post.getTitle());
     }
 
     @Test
-    void deleteById_shouldRemovePostFromDatabase() {
+    void deleteById() {
         jdbcTemplate.execute("DELETE FROM comment WHERE post_id = 1");
         jdbcTemplate.execute("DELETE FROM post_preview WHERE post_id = 1");
         postRepository.deleteById(1L);
 
-        List<Post> posts = postRepository.findAll();
+        var posts = postRepository.findAll();
 
-        Post deletedPost = posts.stream()
+        var deletedPost = posts.stream()
                 .filter(p -> p.getId().equals(1L))
                 .findFirst()
                 .orElse(null);

@@ -1,4 +1,4 @@
-package com.yandex.blog.repository;
+package com.yandex.blog.repository.mapper;
 
 import com.yandex.blog.model.Post;
 import org.junit.jupiter.api.Test;
